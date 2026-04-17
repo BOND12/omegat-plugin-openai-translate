@@ -17,6 +17,16 @@ This software is open source software licensed under the GNU GPLv2. In addition,
 - **Configurable Model and Temperature via GUI**: Users can now configure the OpenAI model and temperature settings directly through the OmegaT GUI.
 - **Custom User-Defined Prompts via GUI**: Easily add custom instructions into the translation prompt through the settings UI, allowing for greater flexibility and control over translation output.
 
+## How to build
+Install gradle on your operation system.
+
+Run cmd:
+```bash
+gradle clean jar
+```
+The finished plugin will be located in the folder ./build/libs/
+
+
 ## How to Use
 
 ### 1. Install the Plug-in

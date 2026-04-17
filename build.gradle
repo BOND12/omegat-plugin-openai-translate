@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+}
+
+group = 'kr.ychoi.otplugin'
+version = '1.0'
+
+// ---------------------------------------------------------
+// 🔧 FORCE USE JDK 8 (Toolchains)
+// ---------------------------------------------------------
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+// ---------------------------------------------------------
+
+// 1️⃣ Configure source directories
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src', 'src-stub']
+        }
+        resources {
+            srcDirs = []  // Disable auto resource discovery, control manually
+        }
+    }
+}
+
+// 2️⃣ Bytecode version
+sourceCompatibility = '8'
+targetCompatibility = '8'
+
+// 3️⃣ JAR build configuration
+jar {
+    archiveFileName = 'OpenAITranslate.jar'
+
+    // 📋 USE PRE-BUILT MANIFEST FROM PROJECT
+    manifest {
+        from 'META-INF/MANIFEST.MF'
+    }
+
+    // 📁 Copy images folder
+    from('images') {
+        into 'images'
+        exclude '**/*.DS_Store', '**/Thumbs.db', '**/.gitkeep'
+    }
+
+    // 📄 Root project files
+    from(files('LICENSE.md', 'README.md', 'OpenAITranslate.iml'))
+}
+
+// 4️⃣ Task to verify JAR contents
+tasks.register('showJarContent') {
+    dependsOn jar
+    doLast {
+        def jarFile = file("${buildDir}/libs/${jar.archiveFileName.get()}")
+        println "\n📦 JAR contents:"
+        def proc = "jar tf ${jarFile.absolutePath}".execute()
+        proc.in.eachLine { println "  $it" }
+        proc.waitFor()
+        println "✅ Done: ${jarFile.absolutePath}\n"
+    }
+}
+
+// 5️⃣ Task to verify Java version
+tasks.register('checkJavaVersion') {
+    doLast {
+        println "\n🔍 Java Environment:"
+        println "  Gradle JVM: ${org.gradle.internal.jvm.Jvm.current()}"
+        println "  Java home: ${System.getProperty('java.home')}"
+        println "  Compiler: ${JavaVersion.current()}"
+        println "  Toolchain: ${java.toolchain.languageVersion.getOrNull() ?: 'not configured'}"
+        println ""
+    }
+}
