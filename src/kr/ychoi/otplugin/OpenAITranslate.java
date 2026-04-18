@@ -31,14 +31,14 @@ public class OpenAITranslate extends BaseCachedTranslate {
 //    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private static final String API_URL = "http://localhost:11434/v1/chat/completions";
     private static final String BASE_PROMPT = 
-            "You are a translation tool integrated in a CAT (Computer-Assisted Translation) tool. Translate the following text from %s to %s. Preserve the tags in the text and keep any segmentations intact.\n\n";
+            "You are a translation tool integrated in a CAT (Computer-Assisted Translation) tool. Translate the following text from %s to %s. Preserve the tags in the text and keep any segmentations intact. Your response should not contain any comments or additions unrelated to the translation. Please note that the text may be as short as one word (or no words at all).\n\n";
     
     private static final String PARAM_API_KEY = "openai.api.key";
     private static final String PARAM_MODEL = "openai.model";
     private static final String PARAM_TEMPERATURE = "openai.temperature";
     private static final String PARAM_CUSTOM_PROMPT = "custom.prompt";
 
-    private static final String DEFAULT_MODEL = "gpt-4o";
+    private static final String DEFAULT_MODEL = "qwen3.5:9b";
     private static final String DEFAULT_TEMPERATURE = "0";
     private static final String DEFAULT_CUSTOM_PROMPT = "";
 
